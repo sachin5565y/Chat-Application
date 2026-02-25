@@ -22,6 +22,9 @@ redisClient.connect()
   .catch((err) => console.error('Failed to connect to Redis', err));
 
 const app = express();
+
+app.use(express.json());
+
 const port = process.env.PORT || 5000;
 
 
