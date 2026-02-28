@@ -38,6 +38,7 @@ export const startSendOtpConsumer = async () => {
             subject,
             text: body,
           });
+          console.log(`✅ OTP email sent to ${to}`);
 
           channel.ack(msg);
         } catch (error) {

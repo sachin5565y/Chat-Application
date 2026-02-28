@@ -3,34 +3,29 @@ import dotenv from 'dotenv';
 import connectDb from './config/db.js';
 import { createClient } from 'redis';
 import userRoutes from './routes/user.js';
+import { connectRabbitMQ } from './config/rabbitmq.js';
 
 dotenv.config();
-connectDb();
-
-const redisUrl = process.env.REDIS_URL;
-
-if (!redisUrl) {
-  throw new Error("REDIS_URL is not defined in .env");
-}
 
 export const redisClient = createClient({
-  url: redisUrl,
+  url: process.env.REDIS_URL as string,
 });
 
-redisClient.connect()
-  .then(() => console.log('Connected to Redis'))
-  .catch((err) => console.error('Failed to connect to Redis', err));
+const startServer = async () => {
+  connectDb();
 
-const app = express();
+  await redisClient.connect();
+  console.log('Connected to Redis');
 
-app.use(express.json());
+  await connectRabbitMQ();   // ⭐ FIX
 
-const port = process.env.PORT || 5000;
+  const app = express();
+  app.use(express.json());
+  app.use("/api/v1", userRoutes);
 
+  app.listen(process.env.PORT || 5000, () => {
+    console.log("User service running");
+  });
+};
 
-
-app.use("api/v1",userRoutes);
-
-app.listen(port, () => {
-  console.log(`User service is running on port ${port}`);
-});
+startServer();
