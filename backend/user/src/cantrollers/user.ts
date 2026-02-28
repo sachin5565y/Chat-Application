@@ -2,6 +2,7 @@ import { generateToken } from "../config/genrateToken.js";
 import { publishToQueue } from "../config/rabbitmq.js";
 import TryCatch from "../config/TryCatch.js";
 import { redisClient } from "../index.js";
+import { AuthenticatedRequest } from "../middleware/isAuth.js";
 import { User } from "../model/User.js";
 
 
@@ -70,4 +71,15 @@ export const verifyUser = TryCatch(async (req, res) => {
     user,
     token,
   });
+});
+
+
+
+export const myprofile=TryCatch(async(req:AuthenticatedRequest,res)=>{
+    const user=req.user;
+    res.json({
+        message:"My Profile",
+        user
+    })
+
 });
