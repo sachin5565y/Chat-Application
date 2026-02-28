@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 export interface IUser extends Document {
     name: string;
     email: string;
+    _id: mongoose.Types.ObjectId;
 }
 const schema:Schema<IUser> = new Schema({
     name: { 
