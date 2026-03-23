@@ -46,12 +46,12 @@ const ChatSidebar = ({
 
   return (
     <aside
-      className={`fixed z-20 sm:static top-0 left-0 h-screen w-80 bg-gray-900 border-r border-gray-700 transform ${
+      className={`fixed z-20 sm:static top-0 left-0 h-screen w-80 bg-white/5 backdrop-blur-2xl border-r border-white/10 transform ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       } sm:translate-x-0 transition-transform duration-300 flex flex-col`}
     >
       {/* header */}
-      <div className="p-6 border-b border-gray-700">
+      <div className="p-5 border-b border-white/10 backdrop-blur-xl bg-white/5">
         <div className="sm:hidden flex justify-end mb-0">
           <button
             onClick={() => setSidebarOpen(false)}
@@ -75,7 +75,7 @@ const ChatSidebar = ({
             className={`p-2.5 rounded-lg transition-colors ${
               showAllUsers
                 ? "bg-red-600 hover:bg-red-700 text-white"
-                : "bg-green-600 hover:bg-green-700 text-white"
+                : "bg-gradient-to-r from-green-500 to-emerald-600 hover:opacity-90 shadow-lg text-white"
             }`}
             onClick={() => setShowAllUsers((prev) => !prev)}
           >
@@ -97,7 +97,7 @@ const ChatSidebar = ({
               <input
                 type="text"
                 placeholder="Search Users..."
-                className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 text-white placeholder-gray-400"
+                className="w-full pl-10 pr-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-400"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -116,7 +116,7 @@ const ChatSidebar = ({
                 .map((u) => (
                   <button
                     key={u._id}
-                    className="w-full text-left p-4 rounded-lg border border-gray-700 hover:border-gray-600 hover:bg-gray-800 transition-colors"
+                    className="w-full text-left p-3 rounded-xl transition-all duration-200 hover:bg-white/10 hover:scale-[1.01] hover:bg-gray-800 transition-colors"
                     onClick={() => createChat(u)}
                   >
                     <div className="flex items-center gap-3">
@@ -156,7 +156,7 @@ const ChatSidebar = ({
                   }}
                   className={`w-full text-left p-4 rounded-lg transition-colors ${
                     isSelected
-                      ? "bg-blue-600 border border-blue-500"
+                      ? "bg-blue-500/20 border border-blue-500 shadow-lg"
                       : "border border-gray-700 hover:border-gray-600"
                   }`}
                 >
@@ -167,7 +167,7 @@ const ChatSidebar = ({
                         {/* onlineuser ka work hai */}
                       </div>
                       {onlineUsers.includes(chat.user._id) && (
-                        <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-green-500 border-2 border-gray-900" />
+                        <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-green-400 border-2 border-black animate-pulse" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -180,7 +180,7 @@ const ChatSidebar = ({
                           {chat.user.name}
                         </span>
                         {unseenCount > 0 && (
-                          <div className="bg-red-600 text-white text-xs font-bold rounded-full min-width: 22px h-5.5 flex items-center justify-center px-2">
+                          <div className="bg-red-600 text-white text-xs font-bold rounded-full min-w-[22px] h-5 flex items-center justify-center px-2 rounded-full bg-red-500 text-xs font-bold h-5.5 flex items-center justify-center px-2">
                             {unseenCount > 99 ? "99+" : unseenCount}
                           </div>
                         )}
@@ -227,7 +227,7 @@ const ChatSidebar = ({
       <div className="p-4 border-t border-gray-700 space-y-2">
         <Link
           href={"/profile"}
-          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-all duration-200 rounded-3xl transition-colors"
         >
           <div className="p-1.5 bg-gray-700 rounded-lg">
             <UserCircle className="w-4 h-4 text-gray-300" />
@@ -239,7 +239,7 @@ const ChatSidebar = ({
           onClick={handleLogout}
           className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-600 transition-colors text-red-500 hover:text-white"
         >
-          <div className="p-1.5 bg-red-600 rounded-lg">
+          <div className="p-1.5 hover:bg-red-500/80">
             <LogOut className="w-4 h-4 text-gray-300" />
           </div>
           <span className="font-medium">Logout</span>
